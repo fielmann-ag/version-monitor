@@ -1,0 +1,7 @@
+targets:
+  - name: Prometheus
+    current:
+      type: http
+      endpoints:
+      - http://local-prometheus:9090/api/version
+      path: .version
