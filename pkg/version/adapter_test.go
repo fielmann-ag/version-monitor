@@ -4,34 +4,35 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/fielmann-ag/ops-version-monitor/pkg/config"
 	testing2 "github.com/fielmann-ag/ops-version-monitor/pkg/internal/testing"
 )
 
 func TestAddAdapter(t *testing.T) {
-	var testAdapter1 = testing2.NewStaticAdapter("test1")
-	var testAdapter2 = testing2.NewStaticAdapter("test2")
+	var testAdapter1 = testing2.NewStaticAdapter("test1", "test1", "latest1")
+	var testAdapter2 = testing2.NewStaticAdapter("test1", "test2", "latest2")
 
 	type args struct {
-		name    string
-		adapter Adapter
+		adapterType config.AdapterType
+		adapter     Adapter
 	}
 	tests := []struct {
 		name      string
 		args      args
-		before    map[string]Adapter
-		after     map[string]Adapter
+		before    map[config.AdapterType]Adapter
+		after     map[config.AdapterType]Adapter
 		wantPanic bool
 	}{
 		{
 			name: "add_simple",
 			args: args{
-				name:    "test2",
-				adapter: testAdapter2,
+				adapterType: "test2",
+				adapter:     testAdapter2,
 			},
-			before: map[string]Adapter{
+			before: map[config.AdapterType]Adapter{
 				"test1": testAdapter1,
 			},
-			after: map[string]Adapter{
+			after: map[config.AdapterType]Adapter{
 				"test1": testAdapter1,
 				"test2": testAdapter2,
 			},
@@ -40,13 +41,13 @@ func TestAddAdapter(t *testing.T) {
 		{
 			name: "add_simple",
 			args: args{
-				name:    "test1",
-				adapter: testAdapter1,
+				adapterType: "test1",
+				adapter:     testAdapter1,
 			},
-			before: map[string]Adapter{
+			before: map[config.AdapterType]Adapter{
 				"test1": testAdapter1,
 			},
-			after: map[string]Adapter{
+			after: map[config.AdapterType]Adapter{
 				"test1": testAdapter1,
 			},
 			wantPanic: true,
@@ -62,7 +63,7 @@ func TestAddAdapter(t *testing.T) {
 			}()
 
 			adapters = tt.before
-			AddAdapter(tt.args.name, tt.args.adapter)
+			AddAdapter(tt.args.adapterType, tt.args.adapter)
 
 			if !reflect.DeepEqual(tt.after, adapters) {
 				t.Errorf("Expected to find adapter map %+v, but found %+v", tt.after, adapters)

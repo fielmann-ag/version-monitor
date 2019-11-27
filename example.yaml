@@ -1,7 +1,51 @@
 targets:
   - name: Prometheus
     current:
-      type: http
-      endpoints:
-      - http://local-prometheus:9090/api/version
-      path: .version
+      type: k8sContainerImage
+      k8sContainerImage:
+        kind: StatefulSet
+        namespace: monitoring
+        name: prometheus-prometheus-operator-prometheus
+        containerName: prometheus
+    latest:
+      type: gitHubRelease
+      gitHubRelease:
+        repo: prometheus/prometheus
+
+  - name: Grafana
+    current:
+      type: k8sContainerImage
+      k8sContainerImage:
+        kind: Deployment
+        namespace: monitoring
+        name: prometheus-operator-grafana
+        containerName: grafana
+    latest:
+      type: gitHubRelease
+      gitHubRelease:
+        repo: grafana/grafana
+
+  - name: NginxIngressPublic
+    current:
+      type: k8sContainerImage
+      k8sContainerImage:
+        kind: DaemonSet
+        namespace: ingress
+        name: nginx-ingress-public-controller-public
+        containerName: nginx-ingress-controller-public
+      latest:
+        type: gitHubRelease
+        gitHubRelease:
+          repo: kubernetes/ingress-nginx
+
+  - name: NginxIngressPrivate
+    current:
+      type: k8sContainerImage
+      k8sContainerImage:
+        kind: DaemonSet
+        namespace: ingress
+        name: nginx-ingress-private-controller-private
+      latest:
+        type: gitHubRelease
+        gitHubRelease:
+          repo: kubernetes/ingress-nginx
