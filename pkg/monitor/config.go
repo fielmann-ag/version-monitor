@@ -1,4 +1,4 @@
-package config
+package monitor
 
 import (
 	"fmt"
@@ -46,12 +46,3 @@ type GitHubRelease struct {
 func (k *GitHubRelease) String() string {
 	return fmt.Sprintf("%v/%v", k.Owner, k.Repo)
 }
-
-// AdapterType defines the adapter to use to load the version from
-type AdapterType string
-
-// Current and Latest Adapter names
-const (
-	AdapterTypeK8sContainerImage AdapterType = "k8sContainerImage"
-	AdapterTypeGitHubRelease     AdapterType = "gitHubRelease"
-)

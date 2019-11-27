@@ -7,17 +7,17 @@ import (
 	"time"
 
 	"github.com/fielmann-ag/version-monitor/pkg/internal/logging"
-	"github.com/fielmann-ag/version-monitor/pkg/version"
+	"github.com/fielmann-ag/version-monitor/pkg/monitor"
 )
 
 // PageRenderer renders the fetched versions as a simple html page
 type PageRenderer struct {
-	monitor version.Monitor
+	monitor monitor.Monitor
 	logger  logging.Logger
 }
 
 // NewPageRenderer returns a new PageRenderer
-func NewPageRenderer(monitor version.Monitor, logger logging.Logger) *PageRenderer {
+func NewPageRenderer(monitor monitor.Monitor, logger logging.Logger) *PageRenderer {
 	return &PageRenderer{
 		monitor: monitor,
 		logger:  logger,

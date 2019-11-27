@@ -3,7 +3,7 @@ package html
 import (
 	"html/template"
 
-	"github.com/fielmann-ag/version-monitor/pkg/version"
+	"github.com/fielmann-ag/version-monitor/pkg/monitor"
 )
 
 var page = template.Must(template.New("page").Parse(pageTmpl))
@@ -32,6 +32,6 @@ var pageTmpl = `
 `
 
 type pageParams struct {
-	Versions []version.Version
+	Versions []monitor.Version
 	Date     string
 }

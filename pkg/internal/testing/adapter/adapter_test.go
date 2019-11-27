@@ -3,7 +3,7 @@ package adapter
 import (
 	"testing"
 
-	"github.com/fielmann-ag/version-monitor/pkg/config"
+	"github.com/fielmann-ag/version-monitor/pkg/monitor"
 )
 
 func TestStaticAdapter_FetchVersion(t *testing.T) {
@@ -30,7 +30,7 @@ func TestStaticAdapter_FetchVersion(t *testing.T) {
 			a := &StaticAdapter{
 				Version: tt.fields.Version,
 			}
-			got, err := a.Fetch(config.AdapterConfig{})
+			got, err := a.Fetch(monitor.AdapterConfig{})
 			if (err != nil) != tt.wantErr {
 				t.Errorf("Fetch() error = %v, wantErr %v", err, tt.wantErr)
 				return

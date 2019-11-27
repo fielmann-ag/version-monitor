@@ -13,7 +13,6 @@ import (
 	config2 "github.com/fielmann-ag/version-monitor/pkg/config"
 	"github.com/fielmann-ag/version-monitor/pkg/html"
 	"github.com/fielmann-ag/version-monitor/pkg/monitor"
-	"github.com/fielmann-ag/version-monitor/pkg/version"
 )
 
 var (
@@ -48,7 +47,7 @@ func main() {
 		logger.Fatal(err)
 	}
 
-	mon := monitor.NewPeriodic(logger.WithField("section", "monitor"), cfg)
+	mon := monitor.NewPeriodic(logger.WithField("section", "monitor"), cfg, adapters.Registry)
 	if err := mon.Start(); err != nil {
 		logger.Fatal(err)
 	}
@@ -59,7 +58,7 @@ func main() {
 	}
 }
 
-func router(mon version.Monitor, logger *logrus.Entry) http.Handler {
+func router(mon monitor.Monitor, logger *logrus.Entry) http.Handler {
 	r := mux.NewRouter()
 	r.Handle("/", html.NewPageRenderer(mon, logger))
 	r.Handle("/metrics", promhttp.Handler())

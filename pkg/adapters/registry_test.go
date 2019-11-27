@@ -4,9 +4,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/fielmann-ag/version-monitor/pkg/config"
 	testAdapter "github.com/fielmann-ag/version-monitor/pkg/internal/testing/adapter"
-	"github.com/fielmann-ag/version-monitor/pkg/version"
+	"github.com/fielmann-ag/version-monitor/pkg/monitor"
 )
 
 func TestAddAdapter(t *testing.T) {
@@ -14,14 +13,14 @@ func TestAddAdapter(t *testing.T) {
 	var testAdapter2 = testAdapter.NewStaticAdapter("latest2")
 
 	type args struct {
-		adapterType config.AdapterType
-		adapter     version.Adapter
+		adapterType monitor.AdapterType
+		adapter     monitor.Adapter
 	}
 	tests := []struct {
 		name    string
 		args    args
-		before  map[config.AdapterType]version.Adapter
-		after   map[config.AdapterType]version.Adapter
+		before  map[monitor.AdapterType]monitor.Adapter
+		after   map[monitor.AdapterType]monitor.Adapter
 		wantErr bool
 	}{
 		{
@@ -30,10 +29,10 @@ func TestAddAdapter(t *testing.T) {
 				adapterType: "test2",
 				adapter:     testAdapter2,
 			},
-			before: map[config.AdapterType]version.Adapter{
+			before: map[monitor.AdapterType]monitor.Adapter{
 				"test1": testAdapter1,
 			},
-			after: map[config.AdapterType]version.Adapter{
+			after: map[monitor.AdapterType]monitor.Adapter{
 				"test1": testAdapter1,
 				"test2": testAdapter2,
 			},
@@ -45,10 +44,10 @@ func TestAddAdapter(t *testing.T) {
 				adapterType: "test1",
 				adapter:     testAdapter1,
 			},
-			before: map[config.AdapterType]version.Adapter{
+			before: map[monitor.AdapterType]monitor.Adapter{
 				"test1": testAdapter1,
 			},
-			after: map[config.AdapterType]version.Adapter{
+			after: map[monitor.AdapterType]monitor.Adapter{
 				"test1": testAdapter1,
 			},
 			wantErr: true,

@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/fielmann-ag/version-monitor/pkg/config"
 	"github.com/fielmann-ag/version-monitor/pkg/internal/logging"
+	"github.com/fielmann-ag/version-monitor/pkg/monitor"
 )
 
 type gitHubReleaseAdapter struct {
@@ -20,7 +20,7 @@ func newGitHubReleaseAdapter(logger logging.Logger, reposClient reposClient) *gi
 	}
 }
 
-func (a *gitHubReleaseAdapter) Fetch(cfg config.AdapterConfig) (string, error) {
+func (a *gitHubReleaseAdapter) Fetch(cfg monitor.AdapterConfig) (string, error) {
 	a.logger.Debugf("Fetching latest release from %v", cfg.GitHubRelease)
 	release, _, err := a.reposClient.GetLatestRelease(context.TODO(), cfg.GitHubRelease.Owner, cfg.GitHubRelease.Repo)
 	if err != nil {
@@ -30,7 +30,7 @@ func (a *gitHubReleaseAdapter) Fetch(cfg config.AdapterConfig) (string, error) {
 	return *release.TagName, nil
 }
 
-func (a *gitHubReleaseAdapter) Validate(cfg config.AdapterConfig) error {
+func (a *gitHubReleaseAdapter) Validate(cfg monitor.AdapterConfig) error {
 	if cfg.GitHubRelease.Owner == "" {
 		return ErrOwnerEmpty
 	}

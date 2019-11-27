@@ -7,12 +7,12 @@ import (
 
 	"github.com/fielmann-ag/version-monitor/pkg/adapters/github/release"
 	"github.com/fielmann-ag/version-monitor/pkg/adapters/kubernetes/containerimage"
-	"github.com/fielmann-ag/version-monitor/pkg/config"
+	"github.com/fielmann-ag/version-monitor/pkg/monitor"
 )
 
-var adapters = map[config.AdapterType]AdapterConstructor{
-	config.AdapterTypeK8sContainerImage: containerimage.AdapterConstructor,
-	config.AdapterTypeGitHubRelease:     release.AdapterConstructor,
+var adapters = map[monitor.AdapterType]AdapterConstructor{
+	monitor.AdapterTypeK8sContainerImage: containerimage.AdapterConstructor,
+	monitor.AdapterTypeGitHubRelease:     release.AdapterConstructor,
 }
 
 func Register(logger *logrus.Logger) error {

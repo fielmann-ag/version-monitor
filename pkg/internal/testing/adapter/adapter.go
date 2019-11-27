@@ -1,11 +1,11 @@
 package adapter
 
 import (
-	"github.com/fielmann-ag/version-monitor/pkg/config"
+	"github.com/fielmann-ag/version-monitor/pkg/monitor"
 )
 
 // AdapterTypeStatic is the AdapterType value for the static adapter
-const AdapterTypeStatic config.AdapterType = "static"
+const AdapterTypeStatic monitor.AdapterType = "static"
 
 // StaticAdapter is a simple test adapter returning a static value
 type StaticAdapter struct {
@@ -19,11 +19,11 @@ func NewStaticAdapter(version string) *StaticAdapter {
 	}
 }
 
-func (a *StaticAdapter) Validate(cfg config.AdapterConfig) error {
+func (a *StaticAdapter) Validate(cfg monitor.AdapterConfig) error {
 	return nil
 }
 
 // Fetch returns the static fields value, mocking the version.Adapter interface
-func (a *StaticAdapter) Fetch(cfg config.AdapterConfig) (string, error) {
+func (a *StaticAdapter) Fetch(cfg monitor.AdapterConfig) (string, error) {
 	return a.Version, nil
 }

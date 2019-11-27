@@ -11,7 +11,7 @@ import (
 	"k8s.io/client-go/tools/clientcmd"
 
 	"github.com/fielmann-ag/version-monitor/pkg/internal/logging"
-	"github.com/fielmann-ag/version-monitor/pkg/version"
+	"github.com/fielmann-ag/version-monitor/pkg/monitor"
 )
 
 var (
@@ -24,7 +24,7 @@ type envConfig struct {
 }
 
 // AdapterConstructor creates a new adapter instance
-func AdapterConstructor(logger logging.Logger) (version.Adapter, error) {
+func AdapterConstructor(logger logging.Logger) (monitor.Adapter, error) {
 	envconfig.MustProcess("", &config)
 
 	cfg, err := loadKubernetesClientConfig()

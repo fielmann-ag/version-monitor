@@ -9,23 +9,23 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 
-	config2 "github.com/fielmann-ag/version-monitor/pkg/config"
 	"github.com/fielmann-ag/version-monitor/pkg/internal/logging"
+	"github.com/fielmann-ag/version-monitor/pkg/monitor"
 )
 
-type ContainerImageAdapter struct {
+type containerImageAdapter struct {
 	logger    logging.Logger
 	clientSet kubernetes.Interface
 }
 
-func newContainerImageAdapter(logger logging.Logger, clientSet kubernetes.Interface) *ContainerImageAdapter {
-	return &ContainerImageAdapter{
+func newContainerImageAdapter(logger logging.Logger, clientSet kubernetes.Interface) *containerImageAdapter {
+	return &containerImageAdapter{
 		logger:    logger,
 		clientSet: clientSet,
 	}
 }
 
-func (a *ContainerImageAdapter) load(cfg config2.AdapterConfig) (*v1.PodTemplateSpec, error) {
+func (a *containerImageAdapter) load(cfg monitor.AdapterConfig) (*v1.PodTemplateSpec, error) {
 	a.logger.Debugf("Loading kubernetes %v", cfg.K8sContainerImage)
 
 	if cfg.K8sContainerImage.Kind == KindDeployment {
@@ -58,7 +58,7 @@ func (a *ContainerImageAdapter) load(cfg config2.AdapterConfig) (*v1.PodTemplate
 	panic("Dead code reached. Receiving a kind that is unknown must be prevented by Validate() method.")
 }
 
-func (a *ContainerImageAdapter) Validate(cfg config2.AdapterConfig) error {
+func (a *containerImageAdapter) Validate(cfg monitor.AdapterConfig) error {
 	if !stringslice.Contains(kinds, cfg.K8sContainerImage.Kind) {
 		return fmt.Errorf("invalid k8sContainerImage.kind value %s (valid are %v)", cfg.K8sContainerImage.Kind, kinds)
 	}
@@ -72,7 +72,7 @@ func (a *ContainerImageAdapter) Validate(cfg config2.AdapterConfig) error {
 	return nil
 }
 
-func (a *ContainerImageAdapter) Fetch(cfg config2.AdapterConfig) (string, error) {
+func (a *containerImageAdapter) Fetch(cfg monitor.AdapterConfig) (string, error) {
 	podTemplate, err := a.load(cfg)
 	if err != nil {
 		return "", err
@@ -96,7 +96,7 @@ func (a *ContainerImageAdapter) Fetch(cfg config2.AdapterConfig) (string, error)
 	return "", fmt.Errorf("podTemplate of %s does not have the desired container", cfg.K8sContainerImage)
 }
 
-func (a *ContainerImageAdapter) imageVersion(spec v1.Container) string {
+func (a *containerImageAdapter) imageVersion(spec v1.Container) string {
 	parts := strings.Split(spec.Image, ":")
 	if len(parts) != 2 {
 		return "latest"

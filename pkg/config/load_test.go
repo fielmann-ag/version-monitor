@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	testing2 "github.com/fielmann-ag/version-monitor/pkg/internal/testing"
+	"github.com/fielmann-ag/version-monitor/pkg/monitor"
 )
 
 func TestLoad(t *testing.T) {
@@ -14,7 +15,7 @@ func TestLoad(t *testing.T) {
 		name        string
 		fileExists  bool
 		fileContent string
-		want        *Config
+		want        *monitor.Config
 		wantErr     bool
 	}{
 		{
@@ -35,7 +36,7 @@ func TestLoad(t *testing.T) {
 			name:        "no_targets",
 			fileExists:  true,
 			fileContent: `targets: []`,
-			want:        &Config{Targets: []Target{}},
+			want:        &monitor.Config{Targets: []monitor.Target{}},
 			wantErr:     false,
 		},
 		{
@@ -49,14 +50,14 @@ targets:
     latest:
       type: static
 `,
-			want: &Config{
-				Targets: []Target{
+			want: &monitor.Config{
+				Targets: []monitor.Target{
 					{
 						Name: "static",
-						Current: AdapterConfig{
+						Current: monitor.AdapterConfig{
 							Type: "static",
 						},
-						Latest: AdapterConfig{
+						Latest: monitor.AdapterConfig{
 							Type: "static",
 						},
 					},
@@ -83,22 +84,22 @@ targets:
         owner: test-owner
         repo: test-repo
 `,
-			want: &Config{
-				Targets: []Target{
+			want: &monitor.Config{
+				Targets: []monitor.Target{
 					{
 						Name: "full",
-						Current: AdapterConfig{
-							Type: AdapterTypeK8sContainerImage,
-							K8sContainerImage: K8sContainerImage{
+						Current: monitor.AdapterConfig{
+							Type: monitor.AdapterTypeK8sContainerImage,
+							K8sContainerImage: monitor.K8sContainerImage{
 								Kind:          "Deployment",
 								Namespace:     "testing",
 								Name:          "test",
 								ContainerName: "test-container",
 							},
 						},
-						Latest: AdapterConfig{
-							Type: AdapterTypeGitHubRelease,
-							GitHubRelease: GitHubRelease{
+						Latest: monitor.AdapterConfig{
+							Type: monitor.AdapterTypeGitHubRelease,
+							GitHubRelease: monitor.GitHubRelease{
 								Owner: "test-owner",
 								Repo:  "test-repo",
 							},

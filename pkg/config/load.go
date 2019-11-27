@@ -6,10 +6,12 @@ import (
 	"os"
 
 	"gopkg.in/yaml.v3"
+
+	"github.com/fielmann-ag/version-monitor/pkg/monitor"
 )
 
 // Load the config from a given filename (including path)
-func Load(filename string) (*Config, error) {
+func Load(filename string) (*monitor.Config, error) {
 	if err := exists(filename); err != nil {
 		return nil, fmt.Errorf("failed to load file %v: %v", filename, err)
 	}
@@ -19,7 +21,7 @@ func Load(filename string) (*Config, error) {
 		return nil, fmt.Errorf("failed to load file %v: %v", filename, err)
 	}
 
-	cfg := &Config{}
+	cfg := &monitor.Config{}
 	if err := yaml.Unmarshal(b, cfg); err != nil {
 		return nil, fmt.Errorf("failed to parse config file %v: %v", filename, err)
 	}
