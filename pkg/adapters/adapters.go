@@ -15,6 +15,7 @@ var adapters = map[monitor.AdapterType]AdapterConstructor{
 	monitor.AdapterTypeGitHubRelease:     release.AdapterConstructor,
 }
 
+// Register all adapters using their constructors
 func Register(logger *logrus.Logger) error {
 	for t, constructor := range adapters {
 		adapter, err := constructor(logger.WithField("adapter", t))

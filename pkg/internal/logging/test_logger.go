@@ -40,22 +40,22 @@ func (l *TestLogger) Warnf(format string, args ...interface{}) {
 
 // Warningf implements Logger interface
 func (l *TestLogger) Warningf(format string, args ...interface{}) {
-	l.t.Errorf(format, args...)
+	l.t.Logf(format, args...)
 }
 
 // Errorf implements Logger interface
 func (l *TestLogger) Errorf(format string, args ...interface{}) {
-	l.t.Errorf(format, args...)
+	l.t.Logf(format, args...)
 }
 
 // Fatalf implements Logger interface
 func (l *TestLogger) Fatalf(format string, args ...interface{}) {
-	l.t.Fatalf(format, args...)
+	l.t.Logf(format, args...)
 }
 
 // Panicf implements Logger interface
 func (l *TestLogger) Panicf(format string, args ...interface{}) {
-	l.t.Fatalf(format, args...)
+	l.t.Logf(format, args...)
 }
 
 // Debug implements Logger interface
@@ -80,20 +80,20 @@ func (l *TestLogger) Warn(args ...interface{}) {
 
 // Warning implements Logger interface
 func (l *TestLogger) Warning(args ...interface{}) {
-	l.t.Error(args...)
+	l.t.Log(args...)
 }
 
 // Error implements Logger interface
 func (l *TestLogger) Error(args ...interface{}) {
-	l.t.Error(args...)
+	l.t.Log(args...)
 }
 
 // Fatal implements Logger interface
 func (l *TestLogger) Fatal(args ...interface{}) {
-	l.t.Fatal(args...)
+	l.t.Log(args...)
 }
 
 // Panic implements Logger interface
 func (l *TestLogger) Panic(args ...interface{}) {
-	l.t.Fatal(args...)
+	l.t.Log(args...)
 }

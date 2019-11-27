@@ -8,7 +8,7 @@ import (
 	"github.com/fielmann-ag/version-monitor/pkg/monitor"
 )
 
-func TestAddAdapter(t *testing.T) {
+func TestRegister(t *testing.T) {
 	var testAdapter1 = testAdapter.NewStaticAdapter("latest1")
 	var testAdapter2 = testAdapter.NewStaticAdapter("latest2")
 

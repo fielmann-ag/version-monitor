@@ -1,25 +1,15 @@
 package html
 
 import (
+	"errors"
 	"net/http"
 	"net/http/httptest"
 	"testing"
-	"time"
 
 	"github.com/fielmann-ag/version-monitor/pkg/internal/logging"
 	internalTesting "github.com/fielmann-ag/version-monitor/pkg/internal/testing"
 	"github.com/fielmann-ag/version-monitor/pkg/monitor"
 )
-
-var testTime time.Time
-
-func init() {
-	var err error
-	testTime, err = time.Parse(time.RFC822, "12 Dec 25 15:00 UTC")
-	if err != nil {
-		panic(err)
-	}
-}
 
 func TestPageRenderer_ServeHTTP(t *testing.T) {
 	type fields struct {
@@ -37,7 +27,7 @@ func TestPageRenderer_ServeHTTP(t *testing.T) {
 					{Name: "x-test", Current: "1.2.3", Latest: "1.4.5"},
 					{Name: "a/test", Current: "4.8.3", Latest: "8.0.0"},
 					{Name: "l_test", Current: "9.2.4", Latest: "10.1.5"},
-				}, testTime, nil),
+				}, internalTesting.Time, nil),
 			},
 			wantBody: `
 <html>
@@ -71,14 +61,39 @@ func TestPageRenderer_ServeHTTP(t *testing.T) {
 </html>
 `,
 		},
+		{
+			name: "error",
+			fields: fields{
+				monitor: internalTesting.NewMonitor([]monitor.Version{}, internalTesting.Time, errors.New("something bad happened")),
+			},
+			wantBody: `failed to render versions template: failed to fetch versions from monitor: something bad happened`,
+		},
+		{
+			name: "empty",
+			fields: fields{
+				monitor: internalTesting.NewMonitor(nil, internalTesting.Time, nil),
+			},
+			wantBody: `
+<html>
+<head>
+</head>
+<body>
+	<div style="margin: 30px">Latest sync at <b>12 Dec 25 15:00 UTC</b></div>
+	<table border="1" cellpadding="10px" cellspacing="0" style="border: 1px solid black;">
+		<tr>
+			<th>Name</th>
+			<th>Currently deployed</th>
+			<th>Latest version</th>
+		</tr>
+	</table>
+</body>
+</html>
+`,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			renderer := &PageRenderer{
-				monitor: tt.fields.monitor,
-				logger:  logging.NewLogger(t),
-			}
-
+			renderer := NewPageRenderer(tt.fields.monitor, logging.NewLogger(t))
 			rw := httptest.NewRecorder()
 			r := httptest.NewRequest(http.MethodGet, "/", nil)
 
