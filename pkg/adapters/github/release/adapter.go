@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/fielmann-ag/ops-version-monitor/pkg/config"
-	"github.com/fielmann-ag/ops-version-monitor/pkg/internal/logging"
+	"github.com/fielmann-ag/version-monitor/pkg/config"
+	"github.com/fielmann-ag/version-monitor/pkg/internal/logging"
 )
 
 type gitHubReleaseAdapter struct {

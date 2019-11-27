@@ -3,7 +3,7 @@ package testing
 import (
 	"testing"
 
-	"github.com/fielmann-ag/ops-version-monitor/pkg/config"
+	"github.com/fielmann-ag/version-monitor/pkg/config"
 )
 
 func TestStaticAdapter_FetchVersion(t *testing.T) {

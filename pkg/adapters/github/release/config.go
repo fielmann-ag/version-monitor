@@ -3,8 +3,8 @@ package release
 import (
 	"github.com/google/go-github/v28/github"
 
-	"github.com/fielmann-ag/ops-version-monitor/pkg/internal/logging"
-	"github.com/fielmann-ag/ops-version-monitor/pkg/version"
+	"github.com/fielmann-ag/version-monitor/pkg/internal/logging"
+	"github.com/fielmann-ag/version-monitor/pkg/version"
 )
 
 // AdapterConstructor creates a new adapter instance

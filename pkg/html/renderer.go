@@ -6,8 +6,8 @@ import (
 	"sort"
 	"time"
 
-	"github.com/fielmann-ag/ops-version-monitor/pkg/internal/logging"
-	"github.com/fielmann-ag/ops-version-monitor/pkg/version"
+	"github.com/fielmann-ag/version-monitor/pkg/internal/logging"
+	"github.com/fielmann-ag/version-monitor/pkg/version"
 )
 
 // PageRenderer renders the fetched versions as a simple html page

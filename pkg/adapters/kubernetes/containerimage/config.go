@@ -10,8 +10,8 @@ import (
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 
-	"github.com/fielmann-ag/ops-version-monitor/pkg/internal/logging"
-	"github.com/fielmann-ag/ops-version-monitor/pkg/version"
+	"github.com/fielmann-ag/version-monitor/pkg/internal/logging"
+	"github.com/fielmann-ag/version-monitor/pkg/version"
 )
 
 var (

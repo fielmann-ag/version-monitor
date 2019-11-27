@@ -5,10 +5,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/fielmann-ag/ops-version-monitor/pkg/adapters"
-	"github.com/fielmann-ag/ops-version-monitor/pkg/config"
-	"github.com/fielmann-ag/ops-version-monitor/pkg/internal/logging"
-	"github.com/fielmann-ag/ops-version-monitor/pkg/version"
+	"github.com/fielmann-ag/version-monitor/pkg/adapters"
+	"github.com/fielmann-ag/version-monitor/pkg/config"
+	"github.com/fielmann-ag/version-monitor/pkg/internal/logging"
+	"github.com/fielmann-ag/version-monitor/pkg/version"
 
 	"github.com/robfig/cron/v3"
 )

@@ -3,7 +3,7 @@ package version
 import (
 	"time"
 
-	"github.com/fielmann-ag/ops-version-monitor/pkg/config"
+	"github.com/fielmann-ag/version-monitor/pkg/config"
 )
 
 // An Adapter is used to load a version string from a specific target / technology / transport

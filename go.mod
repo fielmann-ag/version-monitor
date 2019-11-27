@@ -1,4 +1,4 @@
-module github.com/fielmann-ag/ops-version-monitor
+module github.com/fielmann-ag/version-monitor
 
 go 1.13
 

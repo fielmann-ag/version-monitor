@@ -5,9 +5,9 @@ import (
 
 	"github.com/sirupsen/logrus"
 
-	"github.com/fielmann-ag/ops-version-monitor/pkg/adapters/github/release"
-	"github.com/fielmann-ag/ops-version-monitor/pkg/adapters/kubernetes/containerimage"
-	"github.com/fielmann-ag/ops-version-monitor/pkg/config"
+	"github.com/fielmann-ag/version-monitor/pkg/adapters/github/release"
+	"github.com/fielmann-ag/version-monitor/pkg/adapters/kubernetes/containerimage"
+	"github.com/fielmann-ag/version-monitor/pkg/config"
 )
 
 var adapters = map[config.AdapterType]AdapterConstructor{

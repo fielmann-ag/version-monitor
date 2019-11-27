@@ -3,8 +3,8 @@ package adapters
 import (
 	"fmt"
 
-	"github.com/fielmann-ag/ops-version-monitor/pkg/config"
-	"github.com/fielmann-ag/ops-version-monitor/pkg/version"
+	"github.com/fielmann-ag/version-monitor/pkg/config"
+	"github.com/fielmann-ag/version-monitor/pkg/version"
 )
 
 // Registry of all loaded adapters

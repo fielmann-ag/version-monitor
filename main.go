@@ -9,11 +9,11 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/sirupsen/logrus"
 
-	"github.com/fielmann-ag/ops-version-monitor/pkg/adapters"
-	config2 "github.com/fielmann-ag/ops-version-monitor/pkg/config"
-	"github.com/fielmann-ag/ops-version-monitor/pkg/html"
-	"github.com/fielmann-ag/ops-version-monitor/pkg/monitor"
-	"github.com/fielmann-ag/ops-version-monitor/pkg/version"
+	"github.com/fielmann-ag/version-monitor/pkg/adapters"
+	config2 "github.com/fielmann-ag/version-monitor/pkg/config"
+	"github.com/fielmann-ag/version-monitor/pkg/html"
+	"github.com/fielmann-ag/version-monitor/pkg/monitor"
+	"github.com/fielmann-ag/version-monitor/pkg/version"
 )
 
 var (
@@ -22,7 +22,7 @@ var (
 )
 
 type envConfig struct {
-	Config  string `default:"ops-version-monitor.yaml"`
+	Config  string `default:"version-monitor.yaml"`
 	Listen  string `default:":8080"`
 	Verbose bool
 }

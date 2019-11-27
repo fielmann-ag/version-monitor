@@ -4,8 +4,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/fielmann-ag/ops-version-monitor/pkg/config"
-	testing2 "github.com/fielmann-ag/ops-version-monitor/pkg/internal/testing"
+	"github.com/fielmann-ag/version-monitor/pkg/config"
+	testing2 "github.com/fielmann-ag/version-monitor/pkg/internal/testing"
 )
 
 func TestAddAdapter(t *testing.T) {

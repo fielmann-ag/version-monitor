@@ -3,7 +3,7 @@ package html
 import (
 	"html/template"
 
-	"github.com/fielmann-ag/ops-version-monitor/pkg/version"
+	"github.com/fielmann-ag/version-monitor/pkg/version"
 )
 
 var page = template.Must(template.New("page").Parse(pageTmpl))

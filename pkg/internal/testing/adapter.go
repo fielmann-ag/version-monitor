@@ -1,7 +1,7 @@
 package testing
 
 import (
-	"github.com/fielmann-ag/ops-version-monitor/pkg/config"
+	"github.com/fielmann-ag/version-monitor/pkg/config"
 )
 
 // AdapterTypeStatic is the AdapterType value for the static adapter

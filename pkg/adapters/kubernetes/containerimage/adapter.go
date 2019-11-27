@@ -9,8 +9,8 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 
-	config2 "github.com/fielmann-ag/ops-version-monitor/pkg/config"
-	"github.com/fielmann-ag/ops-version-monitor/pkg/internal/logging"
+	config2 "github.com/fielmann-ag/version-monitor/pkg/config"
+	"github.com/fielmann-ag/version-monitor/pkg/internal/logging"
 )
 
 type ContainerImageAdapter struct {
