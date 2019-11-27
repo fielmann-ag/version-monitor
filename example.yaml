@@ -33,10 +33,10 @@ targets:
         namespace: ingress
         name: nginx-ingress-public-controller-public
         containerName: nginx-ingress-controller-public
-      latest:
-        type: gitHubRelease
-        gitHubRelease:
-          repo: kubernetes/ingress-nginx
+    latest:
+      type: gitHubRelease
+      gitHubRelease:
+        repo: kubernetes/ingress-nginx
 
   - name: NginxIngressPrivate
     current:
@@ -45,7 +45,7 @@ targets:
         kind: DaemonSet
         namespace: ingress
         name: nginx-ingress-private-controller-private
-      latest:
-        type: gitHubRelease
-        gitHubRelease:
-          repo: kubernetes/ingress-nginx
+    latest:
+      type: gitHubRelease
+      gitHubRelease:
+        repo: kubernetes/ingress-nginx

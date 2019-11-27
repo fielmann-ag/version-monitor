@@ -3,6 +3,7 @@ package html
 import (
 	"fmt"
 	"net/http"
+	"sort"
 
 	"github.com/fielmann-ag/ops-version-monitor/pkg/internal/logging"
 	"github.com/fielmann-ag/ops-version-monitor/pkg/version"
@@ -28,9 +29,11 @@ func (r *PageRenderer) render(rw http.ResponseWriter) error {
 		return fmt.Errorf("failed to fetch versions from monitor: %v", err)
 	}
 
+	sort.Slice(versions, func(i, j int) bool { return versions[i].Name < versions[j].Name })
+
 	params := &pageParams{
 		Versions: versions,
-		Date: date,
+		Date:     date,
 	}
 	if err := page.Execute(rw, params); err != nil {
 		return fmt.Errorf("failed to render page template: %v", err)

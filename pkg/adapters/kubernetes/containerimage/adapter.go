@@ -1,4 +1,4 @@
-package kubernetes
+package containerimage
 
 import (
 	"fmt"
@@ -13,14 +13,12 @@ import (
 	"github.com/fielmann-ag/ops-version-monitor/pkg/internal/logging"
 )
 
-// ContainerImageAdapter loads a version string from a k8s container image
 type ContainerImageAdapter struct {
 	logger    logging.Logger
 	clientSet kubernetes.Interface
 }
 
-// NewContainerImageAdapter returns a new ContainerImageAdapter instance
-func NewContainerImageAdapter(logger logging.Logger, clientSet kubernetes.Interface) *ContainerImageAdapter {
+func newContainerImageAdapter(logger logging.Logger, clientSet kubernetes.Interface) *ContainerImageAdapter {
 	return &ContainerImageAdapter{
 		logger:    logger,
 		clientSet: clientSet,
@@ -58,7 +56,6 @@ func (a *ContainerImageAdapter) load(cfg config2.AdapterConfig) (*v1.PodTemplate
 	panic("Dead code reached. Receiving a kind that is unknown must be prevented by Validate() method.")
 }
 
-// Validate the given config
 func (a *ContainerImageAdapter) Validate(cfg config2.AdapterConfig) error {
 	if !stringslice.Contains(kinds, cfg.K8sContainerImage.Kind) {
 		return fmt.Errorf("invalid k8sContainerImage.kind value %s (valid are %v)", cfg.K8sContainerImage.Kind, kinds)
@@ -73,7 +70,6 @@ func (a *ContainerImageAdapter) Validate(cfg config2.AdapterConfig) error {
 	return nil
 }
 
-// Fetch a version from given config
 func (a *ContainerImageAdapter) Fetch(cfg config2.AdapterConfig) (string, error) {
 	podTemplate, err := a.load(cfg)
 	if err != nil {
@@ -87,7 +83,7 @@ func (a *ContainerImageAdapter) Fetch(cfg config2.AdapterConfig) (string, error)
 	}
 
 	for _, c := range podTemplate.Spec.Containers {
-		if c.Name != cfg.K8sContainerImage.ContainerName {
+		if cfg.K8sContainerImage.ContainerName != "" && cfg.K8sContainerImage.ContainerName != c.Name {
 			continue
 		}
 
@@ -95,7 +91,7 @@ func (a *ContainerImageAdapter) Fetch(cfg config2.AdapterConfig) (string, error)
 		return a.imageVersion(c), nil
 	}
 
-	return "", ErrContainerNotFound
+	return "", fmt.Errorf("podTemplate of %s does not have the desired container", cfg.K8sContainerImage)
 }
 
 func (a *ContainerImageAdapter) imageVersion(spec v1.Container) string {

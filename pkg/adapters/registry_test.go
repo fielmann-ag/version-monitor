@@ -1,4 +1,4 @@
-package version
+package adapters
 
 import (
 	"reflect"
@@ -9,19 +9,19 @@ import (
 )
 
 func TestAddAdapter(t *testing.T) {
-	var testAdapter1 = testing2.NewStaticAdapter("test1", "test1", "latest1")
-	var testAdapter2 = testing2.NewStaticAdapter("test1", "test2", "latest2")
+	var testAdapter1 = testing2.NewStaticAdapter("latest1")
+	var testAdapter2 = testing2.NewStaticAdapter("latest2")
 
 	type args struct {
 		adapterType config.AdapterType
 		adapter     Adapter
 	}
 	tests := []struct {
-		name      string
-		args      args
-		before    map[config.AdapterType]Adapter
-		after     map[config.AdapterType]Adapter
-		wantPanic bool
+		name    string
+		args    args
+		before  map[config.AdapterType]Adapter
+		after   map[config.AdapterType]Adapter
+		wantErr bool
 	}{
 		{
 			name: "add_simple",
@@ -36,7 +36,7 @@ func TestAddAdapter(t *testing.T) {
 				"test1": testAdapter1,
 				"test2": testAdapter2,
 			},
-			wantPanic: false,
+			wantErr: false,
 		},
 		{
 			name: "add_simple",
@@ -50,23 +50,19 @@ func TestAddAdapter(t *testing.T) {
 			after: map[config.AdapterType]Adapter{
 				"test1": testAdapter1,
 			},
-			wantPanic: true,
+			wantErr: true,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			defer func() {
-				r := recover()
-				if (r != nil) != tt.wantPanic {
-					t.Errorf("AddAdapter() recover = %v, wantPanic = %v", r, tt.wantPanic)
-				}
-			}()
+			Registry = tt.before
+			err := register(tt.args.adapterType, tt.args.adapter)
 
-			adapters = tt.before
-			AddAdapter(tt.args.adapterType, tt.args.adapter)
-
-			if !reflect.DeepEqual(tt.after, adapters) {
-				t.Errorf("Expected to find adapter map %+v, but found %+v", tt.after, adapters)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("AddAdapter() error = %v, wantErr = %v", err, tt.wantErr)
+			}
+			if !reflect.DeepEqual(tt.after, Registry) {
+				t.Errorf("Expected to find adapter map %+v, but found %+v", tt.after, Registry)
 			}
 		})
 	}

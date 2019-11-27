@@ -9,8 +9,10 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/sirupsen/logrus"
 
+	"github.com/fielmann-ag/ops-version-monitor/pkg/adapters"
 	config2 "github.com/fielmann-ag/ops-version-monitor/pkg/config"
 	"github.com/fielmann-ag/ops-version-monitor/pkg/html"
+	"github.com/fielmann-ag/ops-version-monitor/pkg/monitor"
 	"github.com/fielmann-ag/ops-version-monitor/pkg/version"
 )
 
@@ -37,25 +39,29 @@ func init() {
 }
 
 func main() {
+	if err := adapters.Register(logger); err != nil {
+		logger.Fatal(err)
+	}
+
 	cfg, err := config2.Load(config.Config)
 	if err != nil {
 		logger.Fatal(err)
 	}
 
-	monitor := version.NewPeriodicMonitor(logger, cfg)
-	if err := monitor.Start(); err != nil {
+	mon := monitor.NewPeriodic(logger, cfg)
+	if err := mon.Start(); err != nil {
 		logger.Fatal(err)
 	}
 
 	logger.Printf("Listening on %s", config.Listen)
-	if err := http.ListenAndServe(config.Listen, router(monitor, logger)); err != nil {
+	if err := http.ListenAndServe(config.Listen, router(mon, logger)); err != nil {
 		logger.Fatal(err)
 	}
 }
 
-func router(monitor version.Monitor, logger *logrus.Logger) http.Handler {
+func router(mon version.Monitor, logger *logrus.Logger) http.Handler {
 	r := mux.NewRouter()
-	r.Handle("/", html.NewPageRenderer(monitor, logger))
+	r.Handle("/", html.NewPageRenderer(mon, logger))
 	r.Handle("/metrics", promhttp.Handler())
 
 	r.HandleFunc("/_healthz", func(rw http.ResponseWriter, r *http.Request) {

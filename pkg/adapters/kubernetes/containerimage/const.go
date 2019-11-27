@@ -1,4 +1,4 @@
-package kubernetes
+package containerimage
 
 import (
 	"errors"
@@ -18,7 +18,6 @@ var kinds = []string{
 }
 
 var (
-	ErrContainerNotFound = errors.New("podTemplate does not have the desired container")
 	ErrNamespaceEmpty    = errors.New("config has empty namespace field")
 	ErrNameEmpty         = errors.New("config has empty name field")
 )

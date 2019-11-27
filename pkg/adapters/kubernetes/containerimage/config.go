@@ -1,4 +1,4 @@
-package kubernetes
+package containerimage
 
 import (
 	"fmt"
@@ -24,18 +24,21 @@ type envConfig struct {
 	KubeConfig  string `envconfig:"KUBECONFIG"`
 }
 
-func Register(logger logging.Logger) error {
+// AdapterConstructor creates a new adapter instance
+func AdapterConstructor(logger logging.Logger) (config2.AdapterType, version.Adapter, error) {
 	envconfig.MustProcess("", &config)
 
 	cfg, err := loadKubernetesClientConfig()
 	if err != nil {
-		return err
+		return config2.AdapterTypeK8sContainerImage, nil, err
 	}
 
-	client := kubernetes.NewForConfigOrDie(cfg)
+	client, err := kubernetes.NewForConfig(cfg)
+	if err != nil {
+		return config2.AdapterTypeK8sContainerImage, nil, err
+	}
 
-	version.AddAdapter(config2.AdapterTypeK8sContainerImage, NewContainerImageAdapter(logger, client))
-	return nil
+	return config2.AdapterTypeK8sContainerImage, newContainerImageAdapter(logger, client), nil
 }
 
 // loadKubernetesClientConfig loads a REST Config as per the rules specified in GetConfig
