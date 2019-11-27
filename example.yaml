@@ -10,7 +10,8 @@ targets:
     latest:
       type: gitHubRelease
       gitHubRelease:
-        repo: prometheus/prometheus
+        owner: prometheus
+        repo: prometheus
 
   - name: Grafana
     current:
@@ -23,7 +24,8 @@ targets:
     latest:
       type: gitHubRelease
       gitHubRelease:
-        repo: grafana/grafana
+        owner: grafana
+        repo: grafana
 
   - name: NginxIngressPublic
     current:
@@ -36,7 +38,8 @@ targets:
     latest:
       type: gitHubRelease
       gitHubRelease:
-        repo: kubernetes/ingress-nginx
+        owner: kubernetes
+        repo: ingress-nginx
 
   - name: NginxIngressPrivate
     current:
@@ -48,4 +51,5 @@ targets:
     latest:
       type: gitHubRelease
       gitHubRelease:
-        repo: kubernetes/ingress-nginx
+        owner: kubernetes
+        repo: ingress-nginx

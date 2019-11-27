@@ -2,10 +2,8 @@ package html
 
 import (
 	"html/template"
-"time"
 
-
-"github.com/fielmann-ag/ops-version-monitor/pkg/version"
+	"github.com/fielmann-ag/ops-version-monitor/pkg/version"
 )
 
 var page = template.Must(template.New("page").Parse(pageTmpl))
@@ -13,7 +11,7 @@ var pageTmpl = `
 <html>
 <head>
 </head>
-	<h3>Latest sync at {{ .Date }}:</h3>
+	<div style="margin: 30px">Latest sync at <b>{{ .Date }}</b></div>
 	
 	<table border="1" cellpadding="10px" cellspacing="0" style="border: 1px solid black;">
 		<tr>
@@ -35,5 +33,5 @@ var pageTmpl = `
 
 type pageParams struct {
 	Versions []version.Version
-	Date     time.Time
+	Date     string
 }

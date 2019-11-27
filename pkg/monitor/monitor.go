@@ -78,7 +78,7 @@ func (m *PeriodicMonitor) Start() error {
 	return nil
 }
 
-// Run fetch from all adapters
+// Run fetch for all targets
 func (m *PeriodicMonitor) Run() {
 	m.logger.Debugf("fetching versions ...")
 
@@ -106,9 +106,10 @@ func (m *PeriodicMonitor) fetch(target config.Target) {
 
 	m.storeVersion(target.Name, version.Version{
 		Name:    target.Name,
-		Current: currentVersion,
-		Latest:  latestVersion,
+		Current: cleanVersion(currentVersion),
+		Latest:  cleanVersion(latestVersion),
 	})
+
 	m.logger.Debugf("fetching version %v done", target.Name)
 }
 

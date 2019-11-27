@@ -26,6 +26,8 @@ func newContainerImageAdapter(logger logging.Logger, clientSet kubernetes.Interf
 }
 
 func (a *ContainerImageAdapter) load(cfg config2.AdapterConfig) (*v1.PodTemplateSpec, error) {
+	a.logger.Debugf("Loading kubernetes %v", cfg.K8sContainerImage)
+
 	if cfg.K8sContainerImage.Kind == KindDeployment {
 		dep, err := a.clientSet.AppsV1().Deployments(cfg.K8sContainerImage.Namespace).Get(cfg.K8sContainerImage.Name, metav1.GetOptions{})
 		if err != nil {

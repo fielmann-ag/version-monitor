@@ -48,25 +48,25 @@ func main() {
 		logger.Fatal(err)
 	}
 
-	mon := monitor.NewPeriodic(logger, cfg)
+	mon := monitor.NewPeriodic(logger.WithField("section", "monitor"), cfg)
 	if err := mon.Start(); err != nil {
 		logger.Fatal(err)
 	}
 
 	logger.Printf("Listening on %s", config.Listen)
-	if err := http.ListenAndServe(config.Listen, router(mon, logger)); err != nil {
+	if err := http.ListenAndServe(config.Listen, router(mon, logger.WithField("section", "http"))); err != nil {
 		logger.Fatal(err)
 	}
 }
 
-func router(mon version.Monitor, logger *logrus.Logger) http.Handler {
+func router(mon version.Monitor, logger *logrus.Entry) http.Handler {
 	r := mux.NewRouter()
 	r.Handle("/", html.NewPageRenderer(mon, logger))
 	r.Handle("/metrics", promhttp.Handler())
 
 	r.HandleFunc("/_healthz", func(rw http.ResponseWriter, r *http.Request) {
 		if _, err := fmt.Fprintln(rw, "ok"); err != nil {
-			logger.Println(err)
+			logger.Error(err)
 		}
 	})
 

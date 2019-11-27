@@ -10,7 +10,6 @@ import (
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 
-	config2 "github.com/fielmann-ag/ops-version-monitor/pkg/config"
 	"github.com/fielmann-ag/ops-version-monitor/pkg/internal/logging"
 	"github.com/fielmann-ag/ops-version-monitor/pkg/version"
 )
@@ -25,20 +24,20 @@ type envConfig struct {
 }
 
 // AdapterConstructor creates a new adapter instance
-func AdapterConstructor(logger logging.Logger) (config2.AdapterType, version.Adapter, error) {
+func AdapterConstructor(logger logging.Logger) (version.Adapter, error) {
 	envconfig.MustProcess("", &config)
 
 	cfg, err := loadKubernetesClientConfig()
 	if err != nil {
-		return config2.AdapterTypeK8sContainerImage, nil, err
+		return nil, err
 	}
 
 	client, err := kubernetes.NewForConfig(cfg)
 	if err != nil {
-		return config2.AdapterTypeK8sContainerImage, nil, err
+		return nil, err
 	}
 
-	return config2.AdapterTypeK8sContainerImage, newContainerImageAdapter(logger, client), nil
+	return newContainerImageAdapter(logger, client), nil
 }
 
 // loadKubernetesClientConfig loads a REST Config as per the rules specified in GetConfig

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"sort"
+	"time"
 
 	"github.com/fielmann-ag/ops-version-monitor/pkg/internal/logging"
 	"github.com/fielmann-ag/ops-version-monitor/pkg/version"
@@ -33,7 +34,7 @@ func (r *PageRenderer) render(rw http.ResponseWriter) error {
 
 	params := &pageParams{
 		Versions: versions,
-		Date:     date,
+		Date:     date.Format(time.RFC822),
 	}
 	if err := page.Execute(rw, params); err != nil {
 		return fmt.Errorf("failed to render page template: %v", err)

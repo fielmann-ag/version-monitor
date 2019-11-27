@@ -6,5 +6,6 @@ import (
 
 // Adapter Error
 var (
-	ErrReleaseEmpty = errors.New("gitHubRelease.repo must not be empty")
+	ErrOwnerEmpty = errors.New("gitHubRelease.owner must not be empty")
+	ErrRepoEmpty = errors.New("gitHubRelease.repo must not be empty")
 )

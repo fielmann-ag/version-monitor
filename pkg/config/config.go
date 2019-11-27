@@ -38,7 +38,13 @@ func (k *K8sContainerImage) String() string {
 
 // GitHubRelease config section
 type GitHubRelease struct {
-	Repo string `yaml:"repo"`
+	Owner string `yaml:"owner"`
+	Repo  string `yaml:"repo"`
+}
+
+// String implements the fmt.Stringer interface
+func (k *GitHubRelease) String() string {
+	return fmt.Sprintf("%v/%v", k.Owner, k.Repo)
 }
 
 // AdapterType defines the adapter to use to load the version from
