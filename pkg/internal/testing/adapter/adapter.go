@@ -1,4 +1,4 @@
-package testing
+package adapter
 
 import (
 	"github.com/fielmann-ag/version-monitor/pkg/config"
