@@ -11,8 +11,8 @@ type TestLogger struct {
 	t *testing.T
 }
 
-// NewLogger returns a new TestLogger
-func NewLogger(t *testing.T) *TestLogger {
+// NewTestLogger returns a new TestLogger
+func NewTestLogger(t *testing.T) *TestLogger {
 	return &TestLogger{
 		t: t,
 	}
