@@ -1,0 +1,2 @@
+export VERBOSE=true
+export CONFIG="$(pwd)/example.yaml"
