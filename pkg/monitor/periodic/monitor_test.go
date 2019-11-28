@@ -12,7 +12,7 @@ import (
 	"github.com/fielmann-ag/version-monitor/pkg/monitor"
 )
 
-var testErr = errors.New("test")
+var errTest = errors.New("test")
 
 func TestPeriodicMonitor_Start(t *testing.T) {
 	type fields struct {
@@ -115,7 +115,7 @@ func TestPeriodicMonitor_Versions(t *testing.T) {
 				config:           nil,
 				adapters:         nil,
 				cachedVersions:   nil,
-				lastError:        testErr,
+				lastError:        errTest,
 				latestResultFrom: time.Time{},
 			},
 			want:    nil,
@@ -158,7 +158,7 @@ func TestPeriodicMonitor_error(t *testing.T) {
 		{
 			name: "error",
 			args: args{
-				err: testErr,
+				err: errTest,
 			},
 		},
 		{

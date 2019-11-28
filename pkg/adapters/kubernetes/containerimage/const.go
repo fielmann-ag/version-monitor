@@ -17,6 +17,7 @@ var kinds = []string{
 	KindDaemonSet,
 }
 
+// error codes for config violations
 var (
 	ErrNamespaceEmpty    = errors.New("config has empty namespace field")
 	ErrNameEmpty         = errors.New("config has empty name field")

@@ -24,7 +24,7 @@ func NewMonitor(versions []monitor.Version, t time.Time, err error) *Monitor {
 	}
 }
 
-// versions returns the versions set via constructor
+// Versions returns the versions set via constructor
 func (m *Monitor) Versions() ([]monitor.Version, time.Time, error) {
 	return m.versions, m.t, m.err
 }

@@ -19,6 +19,7 @@ func NewStaticAdapter(version string) *StaticAdapter {
 	}
 }
 
+// Validate the given configuration
 func (a *StaticAdapter) Validate(cfg monitor.AdapterConfig) error {
 	return nil
 }
