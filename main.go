@@ -13,6 +13,7 @@ import (
 	config2 "github.com/fielmann-ag/version-monitor/pkg/config"
 	"github.com/fielmann-ag/version-monitor/pkg/html"
 	"github.com/fielmann-ag/version-monitor/pkg/monitor"
+	"github.com/fielmann-ag/version-monitor/pkg/monitor/periodic"
 )
 
 var (
@@ -47,7 +48,7 @@ func main() {
 		logger.Fatal(err)
 	}
 
-	mon := monitor.NewPeriodic(logger.WithField("section", "monitor"), cfg, adapters.Registry)
+	mon := periodic.NewMonitor(logger.WithField("section", "monitor"), cfg, adapters.Registry)
 	if err := mon.Start(); err != nil {
 		logger.Fatal(err)
 	}
