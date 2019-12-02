@@ -13,6 +13,8 @@ import (
 	"github.com/fielmann-ag/version-monitor/pkg/monitor"
 )
 
+var _ monitor.Adapter = &containerImageAdapter{}
+
 type containerImageAdapter struct {
 	logger    logging.Logger
 	clientSet kubernetes.Interface

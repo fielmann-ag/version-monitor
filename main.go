@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
+	"runtime"
 
 	"github.com/gorilla/mux"
 	"github.com/kelseyhightower/envconfig"
@@ -39,6 +41,16 @@ func init() {
 }
 
 func main() {
+	// have a super simple command structure to allow easy fetching of information
+	if len(os.Args) >= 2 {
+		cmd := os.Args[1]
+		switch cmd {
+		case "go-version":
+			fmt.Println(runtime.Version())
+			os.Exit(0)
+		}
+	}
+
 	if err := adapters.Register(logger); err != nil {
 		logger.Fatal(err)
 	}

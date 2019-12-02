@@ -184,7 +184,7 @@ func Test_containerImageAdapter_Fetch(t *testing.T) {
 				},
 			},
 			want:    "",
-			wantErr: errors.New("podTemplate of {Deployment test-ns test-name test-adsf-container} does not have the desired container"),
+			wantErr: errors.New("podTemplate of Deployment:test-ns/test-name:test-adsf-container does not have the desired container"),
 		},
 		{
 			name: "Deployment_fallback_to_latest",

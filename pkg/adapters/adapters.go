@@ -7,12 +7,15 @@ import (
 
 	"github.com/fielmann-ag/version-monitor/pkg/adapters/github/release"
 	"github.com/fielmann-ag/version-monitor/pkg/adapters/kubernetes/containerimage"
+	"github.com/fielmann-ag/version-monitor/pkg/adapters/shell/command"
 	"github.com/fielmann-ag/version-monitor/pkg/monitor"
 )
 
+// please sort the adapters alphabetically. Thank you! 💪🏻
 var adapters = map[monitor.AdapterType]AdapterConstructor{
-	monitor.AdapterTypeK8sContainerImage: containerimage.AdapterConstructor,
-	monitor.AdapterTypeGitHubRelease:     release.AdapterConstructor,
+	command.AdapterType:        command.AdapterConstructor,
+	containerimage.AdapterType: containerimage.AdapterConstructor,
+	release.AdapterType:        release.AdapterConstructor,
 }
 
 // Register all adapters using their constructors

@@ -55,6 +55,20 @@ func TestClean(t *testing.T) {
 			},
 			want: "1.2.3.4.5",
 		},
+		{
+			name: "non_semver_multi_digit",
+			args: args{
+				version: "11.22.33.44.55",
+			},
+			want: "11.22.33.44.55",
+		},
+		{
+			name: "dot_postfix_multi_digit",
+			args: args{
+				version: "11.22.33.44.55.",
+			},
+			want: "11.22.33.44.55",
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

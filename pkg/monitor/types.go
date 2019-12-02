@@ -13,12 +13,6 @@ type Adapter interface {
 // AdapterType defines the adapter to use to load the version from
 type AdapterType string
 
-// Current and Latest Adapter names
-const (
-	AdapterTypeK8sContainerImage AdapterType = "k8sContainerImage"
-	AdapterTypeGitHubRelease     AdapterType = "gitHubRelease"
-)
-
 // AdapterRegistry is a registry for adapters ... wow
 type AdapterRegistry map[AdapterType]Adapter
 

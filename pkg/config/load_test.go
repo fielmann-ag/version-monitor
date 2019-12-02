@@ -6,6 +6,8 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/fielmann-ag/version-monitor/pkg/adapters/github/release"
+	"github.com/fielmann-ag/version-monitor/pkg/adapters/kubernetes/containerimage"
 	testing2 "github.com/fielmann-ag/version-monitor/pkg/internal/testing"
 	"github.com/fielmann-ag/version-monitor/pkg/monitor"
 )
@@ -89,7 +91,7 @@ targets:
 					{
 						Name: "full",
 						Current: monitor.AdapterConfig{
-							Type: monitor.AdapterTypeK8sContainerImage,
+							Type: containerimage.AdapterType,
 							K8sContainerImage: monitor.K8sContainerImage{
 								Kind:          "Deployment",
 								Namespace:     "testing",
@@ -98,7 +100,7 @@ targets:
 							},
 						},
 						Latest: monitor.AdapterConfig{
-							Type: monitor.AdapterTypeGitHubRelease,
+							Type: release.AdapterType,
 							GitHubRelease: monitor.GitHubRelease{
 								Owner: "test-owner",
 								Repo:  "test-repo",

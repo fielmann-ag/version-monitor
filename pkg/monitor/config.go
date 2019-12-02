@@ -21,6 +21,7 @@ type AdapterConfig struct {
 	Type              AdapterType       `yaml:"type"`
 	K8sContainerImage K8sContainerImage `yaml:"k8sContainerImage,omitempty"`
 	GitHubRelease     GitHubRelease     `yaml:"gitHubRelease"`
+	ShellCommand      ShellCommand      `yaml:"shellCommand"`
 }
 
 // K8sContainerImage config section
@@ -32,7 +33,7 @@ type K8sContainerImage struct {
 }
 
 // String implements the fmt.Stringer interface
-func (k *K8sContainerImage) String() string {
+func (k K8sContainerImage) String() string {
 	return fmt.Sprintf("%v:%v/%v:%v", k.Kind, k.Namespace, k.Name, k.ContainerName)
 }
 
@@ -43,6 +44,17 @@ type GitHubRelease struct {
 }
 
 // String implements the fmt.Stringer interface
-func (k *GitHubRelease) String() string {
+func (k GitHubRelease) String() string {
 	return fmt.Sprintf("%v/%v", k.Owner, k.Repo)
+}
+
+// ShellCommand config section
+type ShellCommand struct {
+	Command string   `yaml:"command"`
+	Args    []string `yaml:"args"`
+}
+
+// String implements the fmt.Stringer interface
+func (s ShellCommand) String() string {
+	return fmt.Sprintf("%v", s.Command)
 }
