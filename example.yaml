@@ -53,3 +53,24 @@ targets:
       gitHubRelease:
         owner: kubernetes
         repo: ingress-nginx
+
+  - name: MonitorGolang
+    current:
+      type: shellCommand
+      # # for local development:
+      # shellCommand:
+      #   command: /usr/local/bin/go
+      #   args:
+      #     - run
+      #     - main.go
+      #     - go-version
+      shellCommand:
+        command: /home/version-monitor/version-monitor
+        args:
+          - go-version
+    latest:
+      type: gitHubRelease
+      gitHubRelease:
+        owner: golang
+        repo: go
+
