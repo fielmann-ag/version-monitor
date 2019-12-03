@@ -3,7 +3,7 @@ module github.com/fielmann-ag/version-monitor
 go 1.13
 
 require (
-	github.com/apinnecke/go-stringslice v1.0.0
+	github.com/aklinkert/go-stringslice v1.0.0
 	github.com/google/go-github/v28 v28.1.1
 	github.com/gorilla/mux v1.7.3
 	github.com/kelseyhightower/envconfig v1.4.0
