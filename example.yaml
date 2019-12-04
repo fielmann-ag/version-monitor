@@ -74,3 +74,15 @@ targets:
         owner: golang
         repo: go
 
+  - name: Concourse
+    current:
+      type: httpGet
+      httpGet:
+        url: "https://ci.mgmt.ae.cloudhh.de/api/v1/info"
+        jsonPath: "version"
+    latest:
+      type: gitHubRelease
+      gitHubRelease:
+        owner: concourse
+        repo: concourse
+
