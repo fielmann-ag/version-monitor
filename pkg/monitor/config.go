@@ -58,3 +58,14 @@ type ShellCommand struct {
 func (s ShellCommand) String() string {
 	return fmt.Sprintf("%v", s.Command)
 }
+
+// HttpGet config section
+type HttpGet struct {
+	URL      string `yaml:"url"`
+	JSONPath string `yaml:jsonPath`
+}
+
+// String implements the fmt.Stringer interface
+func (h HttpGet) String() string {
+	return h.URL
+}
