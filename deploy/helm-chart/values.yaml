@@ -11,10 +11,10 @@ nameOverride: ""
 fullnameOverride: ""
 
 resources:
-   limits:
+  limits:
     cpu: 250m
     memory: 256Mi
-   requests:
+  requests:
     cpu: 100m
     memory: 128Mi
 
@@ -23,6 +23,10 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+service:
+  type: ClusterIP
+  port: 80
 
 ingress:
   enabled: true
