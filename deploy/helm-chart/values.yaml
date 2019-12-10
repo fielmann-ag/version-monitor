@@ -1,0 +1,105 @@
+replicaCount: 1
+
+image:
+  pullPolicy: Always
+  repository: 720927046408.dkr.ecr.eu-central-1.amazonaws.com/version-monitor.infrastructure.ops.ae
+  # If digest is present, it is used to specify the image. Otherwise tag is used.
+  digest:
+  tag: latest
+
+nameOverride: ""
+fullnameOverride: ""
+
+resources:
+   limits:
+    cpu: 250m
+    memory: 256Mi
+   requests:
+    cpu: 100m
+    memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+verbose: false
+
+config:
+  targets:
+    - name: Prometheus
+      current:
+        type: k8sContainerImage
+        k8sContainerImage:
+          kind: StatefulSet
+          namespace: monitoring
+          name: prometheus-prometheus-operator-prometheus
+          containerName: prometheus
+      latest:
+        type: gitHubRelease
+        gitHubRelease:
+          owner: prometheus
+          repo: prometheus
+
+    - name: Grafana
+      current:
+        type: k8sContainerImage
+        k8sContainerImage:
+          kind: Deployment
+          namespace: monitoring
+          name: prometheus-operator-grafana
+          containerName: grafana
+      latest:
+        type: gitHubRelease
+        gitHubRelease:
+          owner: grafana
+          repo: grafana
+
+    - name: NginxIngressPublic
+      current:
+        type: k8sContainerImage
+        k8sContainerImage:
+          kind: DaemonSet
+          namespace: ingress
+          name: nginx-ingress-public-controller-public
+          containerName: nginx-ingress-controller-public
+      latest:
+        type: gitHubRelease
+        gitHubRelease:
+          owner: kubernetes
+          repo: ingress-nginx
+
+    - name: NginxIngressPrivate
+      current:
+        type: k8sContainerImage
+        k8sContainerImage:
+          kind: DaemonSet
+          namespace: ingress
+          name: nginx-ingress-private-controller-private
+      latest:
+        type: gitHubRelease
+        gitHubRelease:
+          owner: kubernetes
+          repo: ingress-nginx
+
+    - name: MonitorGolang
+      current:
+        type: shellCommand
+        # # for local development:
+        # shellCommand:
+        #   command: /usr/local/bin/go
+        #   args:
+        #     - run
+        #     - main.go
+        #     - go-version
+        shellCommand:
+          command: /home/version-monitor/version-monitor
+          args:
+            - go-version
+      latest:
+        type: gitHubRelease
+        gitHubRelease:
+          owner: golang
+          repo: go
+
