@@ -105,6 +105,8 @@ jobs:
               type: string
             - key: image.digest
               path: docker-image/digest
+            - key: ingress.host
+              value: version-manager.test.cloudhh.de
 
   - name: deploy to dev
     serial: true
@@ -134,6 +136,8 @@ jobs:
               type: string
             - key: image.digest
               path: docker-image/digest
+            - key: ingress.host
+              value: version-manager.dev.cloudhh.de
 
   - name: deploy to qa
     serial: true
@@ -163,6 +167,8 @@ jobs:
               type: string
             - key: image.digest
               path: docker-image/digest
+            - key: ingress.host
+              value: version-manager.qa.cloudhh.de
 
 resources:
   - name: code

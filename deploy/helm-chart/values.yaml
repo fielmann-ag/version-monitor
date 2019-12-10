@@ -24,6 +24,15 @@ tolerations: []
 
 affinity: {}
 
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx-private
+    # kubernetes.io/tls-acme: "true"
+  path: /
+  host: version-manager.dev.cloudhh.de
+
+
 verbose: false
 
 config:
