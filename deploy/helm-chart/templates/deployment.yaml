@@ -16,7 +16,7 @@ spec:
   template:
     metadata:
       labels:
-        pod-replica-count-insufficient-check: false
+        pod-replica-count-insufficient-check: "false"
         app.kubernetes.io/name: {{ include "version-monitor.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
