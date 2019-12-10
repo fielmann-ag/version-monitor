@@ -50,7 +50,7 @@ spec:
       volumes:
       - name: config
         configMap:
-          configMapName: {{ include "version-monitor.fullname" . }}-config
+          name: {{ include "version-monitor.fullname" . }}-config
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
