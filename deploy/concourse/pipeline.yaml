@@ -78,7 +78,7 @@ jobs:
         get_params:
           skip_download: true
 
-  - name: deploy version-monitor to test
+  - name: deploy to test
     serial: true
     plan:
       - in_parallel:
@@ -106,18 +106,18 @@ jobs:
             - key: image.digest
               path: docker-image/digest
 
-  - name: deploy version-monitor to dev
+  - name: deploy to dev
     serial: true
     plan:
       - in_parallel:
           - get: code
             trigger: true
             passed:
-              - deploy version-monitor to test
+              - deploy to test
           - get: docker-image
             trigger: true
             passed:
-              - deploy version-monitor to test
+              - deploy to test
             params:
               skip_download: true
 
@@ -135,18 +135,18 @@ jobs:
             - key: image.digest
               path: docker-image/digest
 
-  - name: deploy version-monitor to qa
+  - name: deploy to qa
     serial: true
     plan:
       - in_parallel:
           - get: code
             trigger: true
             passed:
-              - deploy version-monitor to dev
+              - deploy to dev
           - get: docker-image
             trigger: true
             passed:
-              - deploy version-monitor to dev
+              - deploy to dev
             params:
               skip_download: true
 
