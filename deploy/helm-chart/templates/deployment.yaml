@@ -15,6 +15,9 @@ spec:
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
+      annotations:
+        checksum/env: {{ include (print $.Template.BasePath "/config-map-env.yaml") . | sha256sum }}
+        checksum/config: {{ include (print $.Template.BasePath "/config-map-config.yaml") . | sha256sum }}
       labels:
         pod-replica-count-insufficient-check: "false"
         app.kubernetes.io/name: {{ include "version-monitor.name" . }}
