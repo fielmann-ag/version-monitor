@@ -6,6 +6,7 @@ import (
 	"github.com/sirupsen/logrus"
 
 	"github.com/fielmann-ag/version-monitor/pkg/adapters/github/release"
+	"github.com/fielmann-ag/version-monitor/pkg/adapters/http/get"
 	"github.com/fielmann-ag/version-monitor/pkg/adapters/kubernetes/containerimage"
 	"github.com/fielmann-ag/version-monitor/pkg/adapters/shell/command"
 	"github.com/fielmann-ag/version-monitor/pkg/monitor"
@@ -15,8 +16,8 @@ import (
 var adapters = map[monitor.AdapterType]AdapterConstructor{
 	command.AdapterType:        command.AdapterConstructor,
 	containerimage.AdapterType: containerimage.AdapterConstructor,
+	get.AdapterType:            get.AdapterConstructor,
 	release.AdapterType:        release.AdapterConstructor,
-	
 }
 
 // Register all adapters using their constructors

@@ -5,11 +5,11 @@ import (
 	"io/ioutil"
 	"net/http"
 
+	"github.com/tidwall/gjson"
+
 	"github.com/fielmann-ag/version-monitor/pkg/internal/logging"
 	"github.com/fielmann-ag/version-monitor/pkg/monitor"
 )
-
-//var _ monitor.Adapter = &shellCommandAdapter{}
 
 var _ monitor.Adapter = &getAdapter{}
 
@@ -23,23 +23,32 @@ func newGetAdapter(logger logging.Logger) *getAdapter {
 	}
 }
 
-func (s getAdapter) Fetch(cfg monitor.AdapterConfig) (string, error) {
-
+func (s *getAdapter) Fetch(cfg monitor.AdapterConfig) (string, error) {
 	res, err := http.Get(cfg.HttpGet.URL)
 	if err != nil {
-		return "", fmt.Errorf("failed to fetch URL %v", err)
+		return "", fmt.Errorf("failed to fetch URL %v: %v", cfg.HttpGet.URL, err)
 
 	}
 	content, err := ioutil.ReadAll(res.Body)
-	res.Body.Close()
 	if err != nil {
-		return "", fmt.Errorf("failed to fetch URL %v", err)
+		return "", fmt.Errorf("failed to read response body: %v", err)
 	}
-	return content.string, nil
+
+	if err := res.Body.Close(); err != nil {
+		return "", fmt.Errorf("failed to close response body: %v", err)
+	}
+
+	if !gjson.ValidBytes(content) {
+		return "", fmt.Errorf("invalid json body from url %v: %v", cfg.HttpGet.URL, string(content))
+	}
+
+	value := gjson.Get(string(content), cfg.HttpGet.JSONPath)
+
+	return value.String(), nil
 
 }
 
-func (s getAdapter) Validate(cfg monitor.AdapterConfig) error {
+func (s *getAdapter) Validate(cfg monitor.AdapterConfig) error {
 	if cfg.HttpGet.URL == "" {
 		return ErrURLMissing
 	}

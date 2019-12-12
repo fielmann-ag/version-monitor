@@ -19,8 +19,9 @@ type Target struct {
 // AdapterConfig config section
 type AdapterConfig struct {
 	Type              AdapterType       `yaml:"type"`
-	K8sContainerImage K8sContainerImage `yaml:"k8sContainerImage,omitempty"`
 	GitHubRelease     GitHubRelease     `yaml:"gitHubRelease"`
+	HttpGet           HttpGet           `yaml:"httpGet"`
+	K8sContainerImage K8sContainerImage `yaml:"k8sContainerImage,omitempty"`
 	ShellCommand      ShellCommand      `yaml:"shellCommand"`
 }
 
@@ -44,8 +45,8 @@ type GitHubRelease struct {
 }
 
 // String implements the fmt.Stringer interface
-func (k GitHubRelease) String() string {
-	return fmt.Sprintf("%v/%v", k.Owner, k.Repo)
+func (g GitHubRelease) String() string {
+	return fmt.Sprintf("%v/%v", g.Owner, g.Repo)
 }
 
 // ShellCommand config section
@@ -62,7 +63,7 @@ func (s ShellCommand) String() string {
 // HttpGet config section
 type HttpGet struct {
 	URL      string `yaml:"url"`
-	JSONPath string `yaml:jsonPath`
+	JSONPath string `yaml:"jsonPath"`
 }
 
 // String implements the fmt.Stringer interface
