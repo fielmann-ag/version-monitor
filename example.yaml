@@ -13,14 +13,24 @@ targets:
         owner: prometheus
         repo: prometheus
 
+  - name: Prometheus Alertmanager
+    current:
+      type: httpGet
+      httpGet:
+        url: "https://alertmanager.common.test.cloudhh.de/api/v2/status"
+        jsonPath: "versionInfo"
+    latest:
+      type: gitHubRelease
+      gitHubRelease:
+        owner: prometheus
+        repo: alertmanager
+
   - name: Grafana
     current:
-      type: k8sContainerImage
-      k8sContainerImage:
-        kind: Deployment
-        namespace: monitoring
-        name: prometheus-operator-grafana
-        containerName: grafana
+      type: httpGet
+      httpGet:
+        url: "https://grafana.common.dev.cloudhh.de/api/health"
+        jsonPath: "version"
     latest:
       type: gitHubRelease
       gitHubRelease:
@@ -85,4 +95,3 @@ targets:
       gitHubRelease:
         owner: concourse
         repo: concourse
-
