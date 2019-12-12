@@ -16,6 +16,7 @@ var adapters = map[monitor.AdapterType]AdapterConstructor{
 	command.AdapterType:        command.AdapterConstructor,
 	containerimage.AdapterType: containerimage.AdapterConstructor,
 	release.AdapterType:        release.AdapterConstructor,
+	
 }
 
 // Register all adapters using their constructors
