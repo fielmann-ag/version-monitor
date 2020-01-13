@@ -170,6 +170,38 @@ jobs:
             - key: ingress.host
               value: version-manager.qa.cloudhh.de
 
+  - name: deploy to prod
+    serial: true
+    plan:
+      - in_parallel:
+          - get: code
+            trigger: true
+            passed:
+              - deploy to qa
+          - get: docker-image
+            trigger: true
+            passed:
+              - deploy to qa
+            params:
+              skip_download: true
+
+      - put: deploy version-monitor
+        resource: helm-prod
+        params:
+          chart: code/deploy/helm-chart
+          release: version-monitor
+          namespace: ae-ops-version-monitor
+          show_diff: true
+          override_values:
+            - key: image.repository
+              path: docker-image/repository
+              type: string
+            - key: image.digest
+              path: docker-image/digest
+            - key: ingress.host
+              value: version-manager.prod.cloudhh.de
+
+
 resources:
   - name: code
     icon: github-circle
@@ -221,6 +253,19 @@ resources:
       helm_history_max: 10
       tiller_service_account: admin
       tiller_namespace: ae-ops-version-monitor
+
+  - name: helm-prod
+    type: helm
+    source:
+      cluster_url: https://api.kubernetes.prod.cloudhh.de/
+      cluster_ca: ((stage-prod-k8s-cluster-ca-base64))
+      admin_cert: ((stage-prod-k8s-admin-cert-base64))
+      admin_key: ((stage-prod-k8s-admin-key-base64))
+      helm_init_server: true
+      helm_history_max: 10
+      tiller_service_account: admin
+      tiller_namespace: ae-ops-version-monitor
+
 
 resource_types:
   - name: helm
