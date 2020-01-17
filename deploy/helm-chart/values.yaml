@@ -138,6 +138,7 @@ config:
       latest:
         type: shellCommand
         shellCommand:
-          command: |
-            wget -O- -q https://raw.githubusercontent.com/fluent/fluentd-kubernetes-daemonset/master/Makefile
-            | grep -Eo 'v[0-9]+\.[0-9]\.[0-9]+\-[a-z-]+kinesis\-[0-9]+\.[0-9]+'
+          command: sh
+          args:
+            - -ce
+            - wget -O- -q https://raw.githubusercontent.com/fluent/fluentd-kubernetes-daemonset/master/Makefile | grep -Eo 'v[0-9]+\.[0-9]\.[0-9]+\-[a-z-]+kinesis\-[0-9]+\.[0-9]+'
