@@ -1,6 +1,8 @@
 package get
 
 import (
+	"net/http"
+	"net/http/httptest"
 	"testing"
 
 	"github.com/fielmann-ag/version-monitor/pkg/internal/logging"
@@ -27,7 +29,7 @@ func Test_getAdapter_Fetch(t *testing.T) {
 			args: args{
 				cfg: monitor.AdapterConfig{
 					HttpGet: monitor.HttpGet{
-						URL:      "https://ci.mgmt.ae.cloudhh.de/api/v1/info",
+						URL:      "/api/v1/info",
 						JSONPath: "version",
 					},
 				},
@@ -41,7 +43,7 @@ func Test_getAdapter_Fetch(t *testing.T) {
 			args: args{
 				cfg: monitor.AdapterConfig{
 					HttpGet: monitor.HttpGet{
-						URL:      "https://ci.mgmt.ae.cloudhh.de/api/v1/invalid",
+						URL:      "/api/v1/invalid",
 						JSONPath: "version",
 					},
 				},
@@ -51,12 +53,20 @@ func Test_getAdapter_Fetch(t *testing.T) {
 		},
 	}
 	for _, tt := range tests {
-
 		t.Run(tt.name, func(t *testing.T) {
 			s := &getAdapter{
 				logger: tt.fields.logger,
 			}
+			server := httptest.NewServer(http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {
+				if req.URL.String() == "/api/v1/info" {
+					rw.Write([]byte(`{"version":"5.7.2","worker_version":"2.2","external_url":"https://ci.mgmt.ae.cloudhh.de"}`))
+				} else {
+					rw.Write([]byte(``))
+				}
+			}))
+			defer server.Close()
 
+			tt.args.cfg.HttpGet.URL = server.URL + tt.args.cfg.HttpGet.URL
 			got, err := s.Fetch(tt.args.cfg)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("getAdapter.Fetch() error = %v, wantErr %v", err, tt.wantErr)
