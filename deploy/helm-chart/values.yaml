@@ -142,3 +142,17 @@ config:
           args:
             - -ce
             - wget -O- -q https://raw.githubusercontent.com/fluent/fluentd-kubernetes-daemonset/master/Makefile | grep -Eo 'v[0-9]+\.[0-9]\.[0-9]+\-[a-z-]+kinesis\-[0-9]+\.[0-9]+'
+
+    - name: Prometheus cloudwatch-exporter
+      current:
+        type: k8sContainerImage
+        k8sContainerImage:
+          kind: Deployment
+          namespace: monitoring
+          name: prometheus-cloudwatch-exporter
+      latest:
+        type: gitHubRelease
+        gitHubRelease:
+          owner: prometheus
+          repo: cloudwatch_exporter
+
