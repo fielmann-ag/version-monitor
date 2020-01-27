@@ -59,10 +59,21 @@ func Test_getAdapter_Fetch(t *testing.T) {
 			}
 			server := httptest.NewServer(http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {
 				if req.URL.String() == "/api/v1/info" {
-					rw.Write([]byte(`{"version":"5.7.2","worker_version":"2.2","external_url":"https://ci.mgmt.ae.cloudhh.de"}`))
+					_, err := rw.Write([]byte(`{"version":"5.7.2","worker_version":"2.2","external_url":"https://ci.mgmt.ae.cloudhh.de"}`))
+					if err != nil {
+						t.Errorf("getAdapter.Fetch() error = %v, wantErr %v", err, tt.wantErr)
+						return
+					}
+
 				} else {
-					rw.Write([]byte(``))
+					_, err := rw.Write([]byte(``))
+					if err != nil {
+						t.Errorf("getAdapter.Fetch() error = %v, wantErr %v", err, tt.wantErr)
+						return
+					}
+
 				}
+
 			}))
 			defer server.Close()
 
