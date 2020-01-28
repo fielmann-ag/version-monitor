@@ -7,7 +7,7 @@ Create a configuration file. The default is `configuration.yaml`, you can start 
 
 Run the system like:
 ```
-git clone 
+git clone git@github.com:fielmann-ag/version-monitor.git
 cd version-monitor
 Config=example.yaml ./version-monitor
 ```
