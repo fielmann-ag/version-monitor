@@ -1,8 +1,8 @@
 # Version Monitor
-A system to keep track of and monitor software version in use by a team or organization. The basic idea is having a overview which software version are we running and what is the latest stable.  
+A system to keep track of and monitor software version in use by a team or organization. The basic idea is having a overview which software version are we running and what is the latest stable version.  
 
 ## Getting started
-Create a configuration file. The default is `configuration.yaml`, you can start from `example.yaml` as starting point. The system supports different adapters for information gathering. See [adapters](./pkg/adapters/README.md) for details. 
+Create a configuration file. The default is `configuration.yaml`, you can use `example.yaml` as starting point. The system supports different adapters for information gathering. See [adapters](./pkg/adapters/README.md) for details.  
 
 
 Run the system like:
