@@ -22,5 +22,7 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 
 ## Authors
 Alex Pinnecke  [aklinkert](https://github.com/aklinkert)
+
 Heinrich Grotjohann [heinrichgrt](https://github.com/heinrichgrt) 
+
 Roman Messer [rmmsr](https://github.com/rmmsr)
