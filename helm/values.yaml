@@ -1,0 +1,33 @@
+replicaCount: 2
+
+image:
+  pullPolicy: Always
+  repository: replace_me
+  # If digest is present, it is used to specify the image. Otherwise tag is used.
+  digest:
+  tag: latest
+
+nameOverride: ""
+fullnameOverride: ""
+
+resources: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  path: /
+  host: replace_me
+
+verbose: false
+
+config:
+  targets: []
