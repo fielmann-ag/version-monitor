@@ -1,0 +1,25 @@
+name: Helm
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+env:
+  helm_version: "3.2.1"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: install helm v${{ env.helm_version }}
+        run: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | DESIRED_VERSION=v${{ env.helm_version }} bash
+      - name: lint helm chart
+        run: helm lint helm/
+      # - name: release helm chart
+      #   run: bash helm/release.sh
