@@ -1,0 +1,6 @@
+---
+releases:
+  - name: version-monitor
+    namespace: { { .Values.namespace } }
+    version: { { .Values.chart_version } }
+    missingFileHandler: Warn
