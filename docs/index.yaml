@@ -9,6 +9,6 @@ entries:
     digest: 74a578a57c16e956afa7e557da9f4683454d2ad81b055765ce16de269d19bd88
     name: version-monitor
     urls:
-    - https://github.com/fielmann-ag/version-monitor/blob/feature/docs/docs/version-monitor-0.1.0.tgz
+    - https://raw.githubusercontent.com/fielmann-ag/version-monitor/feature/docs/docs/version-monitor-0.1.0.tgz
     version: 0.1.0
 generated: "2020-05-11T17:19:40.814552+02:00"
