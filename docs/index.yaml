@@ -3,12 +3,12 @@ entries:
   version-monitor:
   - apiVersion: v1
     appVersion: 0.1.0
-    created: "2020-05-11T17:19:40.815335+02:00"
+    created: "2020-05-15T15:43:47.946422+02:00"
     description: Version-Monitor watches deployed versions of used software and compares
       them to the latest versions
-    digest: 74a578a57c16e956afa7e557da9f4683454d2ad81b055765ce16de269d19bd88
+    digest: 824900e4a9bec2397ed7eae23959c0422206e28233548e1e7712cd991ea009dc
     name: version-monitor
     urls:
-    - https://raw.githubusercontent.com/fielmann-ag/version-monitor/feature/docs/docs/version-monitor-0.1.0.tgz
+    - https://raw.githubusercontent.com/fielmann-ag/version-monitor/master/docs/version-monitor-0.1.0.tgz
     version: 0.1.0
-generated: "2020-05-11T17:19:40.814552+02:00"
+generated: "2020-05-15T15:43:47.945613+02:00"
